@@ -91,7 +91,9 @@ def main():
     parseFolder(profile)
 
 def CATEGORIES():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
-	        addDir2('[COLOR green][B]Update List[/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
+	addDir2('[B]Exodus[/B] - IPTV Channels','',0,'')        
+	addDir2('[COLOR green][B][ Update List ][/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
+	addDir2('--------------------------------------------','',0,'') 
 
 
 def addDir2(name,url,mode,iconimage):
@@ -101,7 +103,6 @@ def addDir2(name,url,mode,iconimage):
 	liz.setInfo( type="Video", infoLabels={ "Title": name } )
 	ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
 	return ok
-	refresh()
 	
 
 def DownloaderClass(url,dest):
@@ -122,7 +123,7 @@ def _pbhook(numblocks, blocksize, filesize, url=None,dp=None):
 
 def UpdateMeuserdata(url):
 	dialog = xbmcgui.Dialog()
-	if dialog.yesno("Update", 'Do you Wish To Install Addon','', "",'Close','Yes'):
+	if dialog.yesno("Update", 'Do you wish to update the channel list?','', "",'Close','Yes'):
 		dp = xbmcgui.DialogProgress()
 		dp.create('UPDATING')
 		print "DOWNLOAD CANCELLED" # need to get this part working
@@ -143,6 +144,7 @@ def UpdateMeuserdata(url):
 		dp.update(100)
 		dp.close()
 		dialog.ok("All Done", " Update Is Complete")
+		xbmc.executebuiltin('Container.Refresh')
 	else:
 		return
 
