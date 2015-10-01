@@ -32,7 +32,7 @@ def GetXBMCVersion():
     return int(version[0]), int(version[1]) #major, minor
 
 
-ADDONID = 'plugin.program.super.favourites'
+ADDONID = 'plugin.program.exodus'
 ADDON   =  xbmcaddon.Addon(ADDONID)
 HOME    =  ADDON.getAddonInfo('path')
 PROFILE =  os.path.join(ADDON.getAddonInfo('profile'), 'Super Favourites')
