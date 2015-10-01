@@ -7,4 +7,4 @@
 		
 		<setting id="VERSION" type="text" label="" default="0.0.0" visible="false"/>
 	</category>
-</settings> 
+</settings>
