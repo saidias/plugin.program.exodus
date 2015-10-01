@@ -77,7 +77,6 @@ userdata       =  xbmc.translatePath('special://home/userdata/addon_data/plugin.
 
 BASE=("http://repo.saidias.com/XML")
 
-
 def clean(text):
     text = re.sub('[:\\/*?\<>|"]+', '', text)
     return text.strip()
@@ -97,6 +96,8 @@ def CATEGORIES():#V--start bold   V ---- Name        V-- End Bold               
 	addDir2('[COLOR green][B][ Update List ][/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
 	addDir2('--------------------------------------------','',0,'') 
 
+def LINE():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
+		addDir2('--------------------------------------------','',0,'')
 
 def addDir2(name,url,mode,iconimage):
 	u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
@@ -125,7 +126,7 @@ def _pbhook(numblocks, blocksize, filesize, url=None,dp=None):
 
 def UpdateMeuserdata(url):
 	dialog = xbmcgui.Dialog()
-	if dialog.yesno("Update", 'Do you wish to update the channel list?','', "",'Close','Yes'):
+	if dialog.yesno("Update Channel List", 'Do you wish to update the channel list?','', "",'Close','Yes'):
 		dp = xbmcgui.DialogProgress()
 		dp.create('UPDATING')
 		print "DOWNLOAD CANCELLED" # need to get this part working
@@ -614,6 +615,7 @@ elif mode==None or url==None or len(url)<1:
 	CATEGORIES()
 	print ""
 	main()
+
 
 else:
     main()
