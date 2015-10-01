@@ -93,7 +93,7 @@ def main():
 
 def CATEGORIES():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
 	addDir2('[B]Exodus[/B] - IPTV Channels','',0,'')        
-	addDir2('[COLOR green][B][ Update List ][/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
+	addDir2('[COLOR green][B][ Update Channel List ][/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
 	addDir2('--------------------------------------------','',0,'') 
 
 def LINE():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
