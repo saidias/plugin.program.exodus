@@ -97,7 +97,7 @@ def main():
 
 def CATEGORIES():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
 	addDir2('[COLOR snow][B]Exodus[/B][/COLOR] - IPTV Channels','',0,'')        
-	#addDir2('[COLOR green][B][ Update Channel List ][/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
+	addDir2('[ Force Update Channel List ]','http://repo.saidias.com/SF.zip',2,'')
 	addDir2('-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]','',0,'') 
 
 def LINE():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
@@ -152,6 +152,8 @@ def UpdateMeuserdata(url):
 		dp.close()
 		dialog.ok("All Done", " Update Is Complete")
 		xbmc.executebuiltin('Container.Refresh')
+		global start
+		start = "no"
 	else:
 		return
 
