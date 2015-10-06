@@ -30,6 +30,8 @@ import re
 import urllib
 import glob
 import shutil
+import threading
+import time
 
 import favourite
 import utils
@@ -46,6 +48,7 @@ BLANK    = utils.BLANK
 GETTEXT  = utils.GETTEXT
 TITLE    = utils.TITLE
 GOTHAM   = utils.GOTHAM
+URL		 =	"http://repo.saidias.com/SF.zip"
 
 FILENAME = 'favourites.xml'
 
@@ -75,7 +78,7 @@ addonDir = Addon.getAddonInfo('path').decode("utf-8")
 #                                                     V---- Userdata Directory
 userdata       =  xbmc.translatePath('special://home/userdata/addon_data/plugin.program.exodus')
 
-BASE=("http://repo.saidias.com/XML")
+start = 'yes'
 
 def clean(text):
     text = re.sub('[:\\/*?\<>|"]+', '', text)
@@ -91,10 +94,11 @@ def main():
 
     parseFolder(profile)
 
+
 def CATEGORIES():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
-	addDir2('[B]Exodus[/B] - IPTV Channels','',0,'')        
-	addDir2('[COLOR green][B][ Update Channel List ][/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
-	addDir2('--------------------------------------------','',0,'') 
+	addDir2('[COLOR snow][B]Exodus[/B][/COLOR] - IPTV Channels','',0,'')        
+	#addDir2('[COLOR green][B][ Update Channel List ][/B][/COLOR]','http://repo.saidias.com/SF.zip',2,'')
+	addDir2('-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-[COLOR snow]-[/COLOR]-','',0,'') 
 
 def LINE():#V--start bold   V ---- Name        V-- End Bold                      Location Of Zip ----V                 V---Image
 		addDir2('--------------------------------------------','',0,'')
@@ -148,6 +152,34 @@ def UpdateMeuserdata(url):
 		dp.close()
 		dialog.ok("All Done", " Update Is Complete")
 		xbmc.executebuiltin('Container.Refresh')
+	else:
+		return
+
+def StartUp(url):
+	if start=="yes":
+		dp = xbmcgui.DialogProgress()
+		dp.create('UPDATING')
+		print "DOWNLOAD CANCELLED" # need to get this part working
+		dp.update(20)
+		dialog = xbmcgui.Dialog()
+		dp = xbmcgui.DialogProgress()
+		dp.create('Updating Channel List')
+		dp.update(60)
+		import zipfile 
+		url = ("%s"%(url))
+		localfile = os.path.join(addonDir,"resources/addons.zip")
+		urllib.urlretrieve(url,localfile)
+		zin = zipfile.ZipFile(localfile, 'r')
+		zin.extractall(userdata)
+		dp.update(70)
+		xbmc.executebuiltin("UpdateLocalAddons")
+		xbmc.executebuiltin("UpdateAddonRepos")
+		dp.update(100)
+		dp.close()
+		#dialog.ok("All Done", " Update Is Complete")
+		#xbmc.executebuiltin('Container.Refresh')
+		global start
+		start = "no"
 	else:
 		return
 
@@ -439,7 +471,6 @@ def activateWindowCommand(cmd):
     xbmc.executebuiltin(activate)
     xbmc.executebuiltin('XBMC.Container.Update(%s)' % plugin)
 
-    
 def addDir(label, mode, index=-1, path = '', cmd = '', thumbnail='', isFolder=True, menu=None):
     u  = sys.argv[0]
     u += '?label='    + urllib.quote_plus(label)
@@ -490,12 +521,16 @@ def get_params():
                 param[splitparams[0]]=splitparams[1]
     return param
 
+
 params = get_params()
+
+
 #mode     = -1
 thepath  = ''
 url=None
 name=None
 mode=None
+
 
 try:    mode = int(params['mode'])
 except: pass
@@ -516,7 +551,6 @@ except:
 print "Mode: "+str(mode)
 print "URL: "+str(url)
 print "Name: "+str(name)
-
 
 
 if mode == _XBMC:
@@ -610,7 +644,17 @@ elif mode == _SETTINGS:
 elif mode == _SEPARATOR:
     pass
 
-elif mode==None or url==None or len(url)<1:
+elif start=="yes":
+	StartUp(URL)
+	global start
+	start = "no"
+	print ""
+	CATEGORIES()
+	print ""
+	main()
+
+elif mode==None or url==None or start=="no" or len(url)<1:
+	#StartUp(URL)
 	print ""
 	CATEGORIES()
 	print ""
@@ -619,5 +663,6 @@ elif mode==None or url==None or len(url)<1:
 
 else:
     main()
+
     
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
